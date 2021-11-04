@@ -1,8 +1,8 @@
-# 人大金仓数据库管理系统 (KingbaseES V8 R6) Docker 镜像jkA
+# 人大金仓数据库管理系统 (KingbaseES V8 R6) Docker 镜像
 
 
 ## 拉取镜像
-- [kingbase-es-v8-r6-docker](https://github.com/chyidl/kingbase-es-v8-r6-docker)
+- [kingbase-es-v8-r6-docker](https://hub.docker.com/repository/docker/chyiyaqing/kingbase)
 
 ```
 $ docker pull chyiyaqing/kingbase:v8r6
