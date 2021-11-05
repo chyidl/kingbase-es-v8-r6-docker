@@ -17,7 +17,7 @@ $ docker build -t kingbase:v8r6 .
 
 ## 运行
 ```
-$ docker run -d --name kingbasev8r6 -p 54322:54321 -e SYSTEM_USER=kingbasees -e SYSTEM_PWD=kingbasees -v /home/hyperchain/kingbase-es-v8-r6-docker/data:/opt/kingbase/data  kingbase:v8r6
+$ docker run -d --name kingbasev8r6 -p 54322:54321 -e SYSTEM_USER=kingbasees -e SYSTEM_PWD=kingbasees -v /home/hyperchain/kingbase-es-v8-r6-docker/data:/opt/kingbase/data -v /home/hyperchain/kingbase-es-v8-r6-docker/license.dat:/opt/kingbase/Server/bin/license.dat  kingbase:v8r6
 ```
 - --name: 容器名称
 - -p: 端口映射
