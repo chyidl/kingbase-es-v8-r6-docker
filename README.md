@@ -90,7 +90,7 @@ kingbase-es-v8-r6-docker
 - kingbase.tar.gz: 通过压缩安装后Kingbase的Server文件夹(该目录下存放了服务器二进制文件、链接文件等, tar -czvf kingbase.tar.gz Server/)
 
 ## 常见问题
-### 启动失败
+* 启动失败
 - 启动失败: 日志报kingbase: superuser_reserved_connections must be less than max_connections
 - 原因: 本仓库中的license.dat 文件是开发测试版，限制最大连接数为10,而人大金仓配置文件默认连接数为100，导致启动失败.
 - 解决: 修改数据目录data下的kingbase.conf 配置文件
@@ -99,4 +99,71 @@ port = 54321                            # (change requires restart)
 max_connections = 100                   # (change requires restart)
 #superuser_reserved_connections = 3     # (change requires restart)
 #unix_socket_directories = '/tmp'       # comma-separated list of directories
+```
+
+* 测试License文件替换
+```
+# 使用企业license版本测试
+
+https://github.com/chyidl/kingbase-es-v8-r6-docker
+kingbase-es-v8-r6-docker on  main on 🐳 v20.10.8
+➜ pgbench -i  -h 127.0.0.1 -p 54322 -U kingbasees test
+Password:
+dropping old tables...
+NOTICE:  table "pgbench_accounts" does not exist, skipping
+NOTICE:  table "pgbench_branches" does not exist, skipping
+NOTICE:  table "pgbench_history" does not exist, skipping
+NOTICE:  table "pgbench_tellers" does not exist, skipping
+creating tables...
+generating data (client-side)...
+100000 of 100000 tuples (100%) done (elapsed 0.07 s, remaining 0.00 s)
+vacuuming...
+creating primary keys...
+done in 5.95 s (drop tables 0.03 s, create tables 0.13 s, client-side generate 4.59 s, vacuum 0.38 s, primary keys 0.83 s).
+
+kingbase-es-v8-r6-docker on  main on 🐳 v20.10.8 took 8s
+➜ pgbench  -c 20 -h 127.0.0.1 -p 54322 -U kingbasees test
+Password:
+pgbench (14.0, server 12.1)
+starting vacuum...end.
+transaction type: <builtin: TPC-B (sort of)>
+scaling factor: 1
+query mode: simple
+number of clients: 20
+number of threads: 1
+number of transactions per client: 10
+number of transactions actually processed: 200/200
+latency average = 248.896 ms
+initial connection time = 842.381 ms
+tps = 80.354912 (without initial connection time)
+
+## 使用测试license.dat 进行测试 (测试版license最大连接数10)
+kingbase-es-v8-r6-docker on  main on 🐳 v20.10.8 took 5s
+➜ pgbench -i  -h 127.0.0.1 -p 54322 -U kingbasees test
+Password:
+dropping old tables...
+NOTICE:  table "pgbench_accounts" does not exist, skipping
+NOTICE:  table "pgbench_branches" does not exist, skipping
+NOTICE:  table "pgbench_history" does not exist, skipping
+NOTICE:  table "pgbench_tellers" does not exist, skipping
+creating tables...
+generating data (client-side)...
+100000 of 100000 tuples (100%) done (elapsed 0.33 s, remaining 0.00 s)
+vacuuming...
+creating primary keys...
+done in 5.68 s (drop tables 0.02 s, create tables 0.12 s, client-side generate 4.40 s, vacuum 0.39 s, primary keys 0.75 s).
+
+kingbase-es-v8-r6-docker on  main [!?] on 🐳 v20.10.8 took 8s
+➜ pgbench  -c 20 -h 127.0.0.1 -p 54322 -U kingbasees test
+Password:
+pgbench (14.0, server 12.1)
+starting vacuum...end.
+pgbench: error: connection to server at "127.0.0.1", port 54322 failed: FATAL:  sorry, too many clients already
+transaction type: <builtin: TPC-B (sort of)>
+scaling factor: 1
+query mode: simple
+number of clients: 20
+number of threads: 1
+number of transactions per client: 10
+number of transactions actually processed: 0/200
 ```
